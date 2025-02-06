@@ -2,6 +2,7 @@ package com.example.synq;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -33,11 +34,13 @@ public class login extends AppCompatActivity {
 
     android.app.ProgressDialog progressDialog;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         progressDialog = new android.app.ProgressDialog(this);
         progressDialog.setMessage("Loading...");

@@ -1,6 +1,8 @@
 package com.example.synq;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -48,15 +50,17 @@ public class registration extends AppCompatActivity {
     FirebaseAuth auth;
     Uri imageURI;
     FirebaseDatabase database;
-    String imageUploadUrl = "";  // URL after upload
-    String IMG_BB_API_KEY = "85e95d78f848688db00735f3a3e73cf7"; // Replace with your ImgBB API Key
-    OkHttpClient client = new OkHttpClient(); // HTTP Client for API calls
+    String imageUploadUrl = "";
+    String IMG_BB_API_KEY = "85e95d78f848688db00735f3a3e73cf7";
+    OkHttpClient client = new OkHttpClient();
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_registration);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         SignupButton = findViewById(R.id.SignUpButton);
         Rg_username = findViewById(R.id.RegUsername);
@@ -186,7 +190,7 @@ public class registration extends AppCompatActivity {
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         if (response.isSuccessful()) {
                             String responseBody = Objects.requireNonNull(response.body()).string();
-                            String imageUrl = responseBody.split("\"url\":\"")[1].split("\"")[0]; // Extract URL from JSON
+                            String imageUrl = responseBody.split("\"url\":\"")[1].split("\"")[0];
                             callback.onImageUploaded(imageUrl);
                         } else {
                             Log.e("ImgBB Upload", "Response not successful: " + response);
