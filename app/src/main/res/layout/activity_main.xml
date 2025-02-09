@@ -9,9 +9,9 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/message5"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:id="@+id/settings"
+        android:layout_width="37dp"
+        android:layout_height="44dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -19,75 +19,42 @@
         android:contentDescription="SettingsIcon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
-        app:layout_constraintStart_toEndOf="@+id/message"
-        app:layout_constraintTop_toBottomOf="@+id/MainUserRecyclerView"
-        app:layout_constraintVertical_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.966"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/sett" />
 
     <ImageView
-        android:id="@+id/message4"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:id="@+id/camera"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:contentDescription="CameraIcon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/message"
-        app:layout_constraintHorizontal_bias="0.878"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainUserRecyclerView"
-        app:layout_constraintVertical_bias="0.875"
-        app:srcCompat="@drawable/camera" />
-
-    <ImageView
-        android:id="@+id/message"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:contentDescription="MessageIcon"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainUserRecyclerView"
-        app:layout_constraintVertical_bias="0.875"
-        app:srcCompat="@drawable/chat" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.852"
+        app:srcCompat="@drawable/camera" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MainUserRecyclerView"
-        android:layout_width="371dp"
-        android:layout_height="646dp"
+        android:layout_width="369dp"
+        android:layout_height="609dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/LogOut"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"
-        android:layout_gravity="center"
-        android:background="@drawable/logout"
-        android:contentDescription="TODO"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.956"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001">
-
-    </ImageView>
+        app:layout_constraintVertical_bias="0.615" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -95,6 +62,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="16dp" />
+
+    <SearchView
+        android:layout_width="367dp"
+        android:layout_height="49dp"
+        app:layout_constraintBottom_toTopOf="@+id/MainUserRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.93" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

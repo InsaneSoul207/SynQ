@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -28,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mainUserRecyclerView;
     UserAdapter adapter;
     ArrayList<Users> usersArrayList;
+    ImageView setting, camera;
     FirebaseDatabase database;
-    @SuppressLint("SourceLockedOrientationActivity")
+    @SuppressLint({"SourceLockedOrientationActivity", "MissingInflatedId"})
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         mainUserRecyclerView = findViewById(R.id.MainUserRecyclerView);
+        setting = findViewById(R.id.settings);
+        setting.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, settings.class);
+            startActivity(intent);
+            });
+
         mainUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new UserAdapter(MainActivity.this, usersArrayList);
         mainUserRecyclerView.setAdapter(adapter);
