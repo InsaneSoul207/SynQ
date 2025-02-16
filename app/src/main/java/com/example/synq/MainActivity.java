@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot: snapshot.getChildren())
+                {
                     Users users = dataSnapshot.getValue(Users.class);
                     usersArrayList.add(users);
                 }
@@ -72,12 +73,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new UserAdapter(MainActivity.this, usersArrayList);
         mainUserRecyclerView.setAdapter(adapter);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        if (auth.getCurrentUser() == null){        //if user is not logged in, Go to Login Frame
-            Intent intent = new Intent(MainActivity.this,login.class);
-            startActivity(intent);
-            finish();
-        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

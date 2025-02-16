@@ -18,6 +18,9 @@
         android:theme="@style/Theme.SynQ"
         tools:targetApi="31">
         <activity
+            android:name=".chat_Win"
+            android:exported="false" />
+        <activity
             android:name=".chatWin"
             android:exported="false" />
         <activity
