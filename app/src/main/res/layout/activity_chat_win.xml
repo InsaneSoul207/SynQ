@@ -40,14 +40,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/msgadpter"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_width="383dp"
+        android:layout_height="576dp"
         android:layout_below="@+id/ll1"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="200dp"
-        android:layout_marginBottom="9dp"
-        android:padding="13dp"/>
+        android:layout_marginBottom="75dp"
+        android:padding="13dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="58.50dp"
