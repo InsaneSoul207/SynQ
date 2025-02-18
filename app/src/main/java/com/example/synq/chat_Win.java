@@ -47,6 +47,9 @@ public class chat_Win extends AppCompatActivity {
     ArrayList<msgModelclass> messagesArrayList;
     messageAdpter messagesAdpter;
 
+    private static final int SHIFT = 3;
+    private static final String SECRET_KEY = "SecretSynQ";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +100,12 @@ public class chat_Win extends AppCompatActivity {
                 messagesArrayList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     msgModelclass messages = dataSnapshot.getValue(msgModelclass.class);
-                    messagesArrayList.add(messages);
+
+                    // Decrypt message before displaying
+                    if (messages != null) {
+                        messages.setMessage(decrypt(messages.getMessage()));
+                        messagesArrayList.add(messages);
+                    }
                 }
                 messagesAdpter.notifyDataSetChanged();
             }
@@ -134,7 +142,8 @@ public class chat_Win extends AppCompatActivity {
 
             textmsg.setText("");
             Date date = new Date();
-            msgModelclass messagesss = new msgModelclass(message, SenderUID, date.getTime());
+            String encryptedMessage = encrypt(message); // Encrypt message before sending
+            msgModelclass messagesss = new msgModelclass(encryptedMessage, SenderUID, date.getTime());
 
             // Store message in both sender's and receiver's chat rooms
             database.getReference().child("chats").child(senderRoom).child("messages")
@@ -153,5 +162,41 @@ public class chat_Win extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    // Encrypt method
+    public static String encrypt(String message) {
+        StringBuilder encrypted = new StringBuilder();
+
+        // Step 1: Apply Caesar Cipher Shift
+        for (char ch : message.toCharArray()) {
+            encrypted.append((char) (ch + SHIFT));
+        }
+
+        // Step 2: Apply XOR with secret key
+        return xorWithKey(encrypted.toString(), SECRET_KEY);
+    }
+
+    // Decrypt method
+    public static String decrypt(String encryptedMessage) {
+        // Step 1: Reverse XOR
+        String xorDecrypted = xorWithKey(encryptedMessage, SECRET_KEY);
+
+        // Step 2: Reverse Caesar Cipher Shift
+        StringBuilder decrypted = new StringBuilder();
+        for (char ch : xorDecrypted.toCharArray()) {
+            decrypted.append((char) (ch - SHIFT));
+        }
+
+        return decrypted.toString();
+    }
+
+    // XOR function
+    private static String xorWithKey(String text, String key) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            result.append((char) (text.charAt(i) ^ key.charAt(i % key.length())));
+        }
+        return result.toString();
     }
 }
