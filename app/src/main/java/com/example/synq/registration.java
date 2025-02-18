@@ -106,8 +106,10 @@ public class registration extends AppCompatActivity {
                         DatabaseReference reference = database.getReference().child("users").child(id);
 
                         if (imageURI != null) {
+
                             uploadImageToImgBB(imageURI, (imageUrl) -> {
-                                Users user = new Users(id, Username, Email, Password, imageUrl, status);
+                                String password = PassEncrypt.finalEncrypt(Password);
+                                Users user = new Users(id, Username, Email, password, imageUrl, status);
                                 reference.setValue(user).addOnCompleteListener(task1 -> {
                                     if (task1.isSuccessful()) {
                                         Log.d("Firebase", "User data uploaded successfully!");
@@ -121,7 +123,13 @@ public class registration extends AppCompatActivity {
                                 });
                             });
                         } else {
-                            Users users = new Users(id, Username, Email, Password, "https://i.ibb.co/3Y1hhVNP/download.png", status);
+                            String password;
+                            try {
+                                password = PassEncrypt.finalEncrypt(Password);
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                            Users users = new Users(id, Username, Email, password, "https://i.ibb.co/3Y1hhVNP/download.png", status);
                             reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -191,7 +199,11 @@ public class registration extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             String responseBody = Objects.requireNonNull(response.body()).string();
                             String imageUrl = responseBody.split("\"url\":\"")[1].split("\"")[0];
-                            callback.onImageUploaded(imageUrl);
+                            try {
+                                callback.onImageUploaded(imageUrl);
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
                         } else {
                             Log.e("ImgBB Upload", "Response not successful: " + response);
                         }
@@ -204,6 +216,6 @@ public class registration extends AppCompatActivity {
     }
 
     interface ImageUploadCallback {
-        void onImageUploaded(String imageUrl);
+        void onImageUploaded(String imageUrl) throws Exception;
     }
 }
