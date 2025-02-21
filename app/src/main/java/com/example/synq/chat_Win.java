@@ -56,16 +56,13 @@ public class chat_Win extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chat_win);
 
-        // Initialize Firebase
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        // Get data from Intent
         reciverName = getIntent().getStringExtra("nameeee");
         reciverimg = getIntent().getStringExtra("reciverImg");
         reciverUid = getIntent().getStringExtra("uid");
 
-        // Initialize UI Components
         sendbtn = findViewById(R.id.sendbtnn);
         textmsg = findViewById(R.id.textmsg);
         profile = findViewById(R.id.profileimgg);
@@ -73,27 +70,22 @@ public class chat_Win extends AppCompatActivity {
         mmessagesAdpter = findViewById(R.id.msgadpter);
         messagesArrayList = new ArrayList<>();
 
-        // Set Up RecyclerView
         messagesAdpter = new messageAdpter(messagesArrayList, chat_Win.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         mmessagesAdpter.setLayoutManager(linearLayoutManager);
         mmessagesAdpter.setAdapter(messagesAdpter);
 
-        // Set Receiver Details
         reciverNName.setText(reciverName);
         Picasso.get().load(reciverimg).into(profile);
 
-        // Get Sender UID
         SenderUID = firebaseAuth.getUid();
         senderRoom = SenderUID + reciverUid;
         reciverRoom = reciverUid + SenderUID;
 
-        // Database Reference
         DatabaseReference reference = database.getReference().child("users").child(SenderUID);
         DatabaseReference chat_reference = database.getReference().child("chats").child(senderRoom).child("messages");
 
-        // Load Messages
         chat_reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -101,7 +93,6 @@ public class chat_Win extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     msgModelclass messages = dataSnapshot.getValue(msgModelclass.class);
 
-                    // Decrypt message before displaying
                     if (messages != null) {
                         messages.setMessage(decrypt(messages.getMessage()));
                         messagesArrayList.add(messages);
@@ -116,7 +107,6 @@ public class chat_Win extends AppCompatActivity {
             }
         });
 
-        // Load Sender Profile Image
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -132,7 +122,6 @@ public class chat_Win extends AppCompatActivity {
             }
         });
 
-        // Send Message
         sendbtn.setOnClickListener(view -> {
             String message = textmsg.getText().toString().trim();
             if (message.isEmpty()) {
@@ -142,10 +131,9 @@ public class chat_Win extends AppCompatActivity {
 
             textmsg.setText("");
             Date date = new Date();
-            String encryptedMessage = encrypt(message); // Encrypt message before sending
+            String encryptedMessage = encrypt(message);
             msgModelclass messagesss = new msgModelclass(encryptedMessage, SenderUID, date.getTime());
 
-            // Store message in both sender's and receiver's chat rooms
             database.getReference().child("chats").child(senderRoom).child("messages")
                     .push().setValue(messagesss)
                     .addOnCompleteListener(task -> {
@@ -156,7 +144,6 @@ public class chat_Win extends AppCompatActivity {
                     });
         });
 
-        // Fix UI Inset Issues
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -164,25 +151,19 @@ public class chat_Win extends AppCompatActivity {
         });
     }
 
-    // Encrypt method
     public static String encrypt(String message) {
         StringBuilder encrypted = new StringBuilder();
 
-        // Step 1: Apply Caesar Cipher Shift
         for (char ch : message.toCharArray()) {
             encrypted.append((char) (ch + SHIFT));
         }
 
-        // Step 2: Apply XOR with secret key
         return xorWithKey(encrypted.toString(), SECRET_KEY);
     }
 
-    // Decrypt method
     public static String decrypt(String encryptedMessage) {
-        // Step 1: Reverse XOR
         String xorDecrypted = xorWithKey(encryptedMessage, SECRET_KEY);
 
-        // Step 2: Reverse Caesar Cipher Shift
         StringBuilder decrypted = new StringBuilder();
         for (char ch : xorDecrypted.toCharArray()) {
             decrypted.append((char) (ch - SHIFT));
@@ -191,7 +172,6 @@ public class chat_Win extends AppCompatActivity {
         return decrypted.toString();
     }
 
-    // XOR function
     private static String xorWithKey(String text, String key) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
