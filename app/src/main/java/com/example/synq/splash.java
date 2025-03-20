@@ -17,9 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class splash extends AppCompatActivity {
-    Button loginRef;
-    TextView SignUpTXT;
-    FirebaseAuth auth; //check data
+    FirebaseAuth auth;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override

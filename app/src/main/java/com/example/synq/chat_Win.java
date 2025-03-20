@@ -134,14 +134,24 @@ public class chat_Win extends AppCompatActivity {
             String encryptedMessage = encrypt(message);
             msgModelclass messagesss = new msgModelclass(encryptedMessage, SenderUID, date.getTime());
 
-            database.getReference().child("chats").child(senderRoom).child("messages")
-                    .push().setValue(messagesss)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            database.getReference().child("chats").child(reciverRoom).child("messages")
-                                    .push().setValue(messagesss);
-                        }
-                    });
+            DatabaseReference senderRef = database.getReference().child("chats").child(senderRoom).child("messages");
+
+            if (SenderUID.equals(reciverUid)) {
+                senderRef.push().setValue(messagesss)
+                        .addOnCompleteListener(task -> {
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(chat_Win.this, "Failed to send message", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                senderRef.push().setValue(messagesss)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                database.getReference().child("chats").child(reciverRoom).child("messages")
+                                        .push().setValue(messagesss);
+                            }
+                        });
+            }
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
