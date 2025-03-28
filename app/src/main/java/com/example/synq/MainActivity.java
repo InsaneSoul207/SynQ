@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     Users users = dataSnapshot.getValue(Users.class);
                     usersArrayList.add(users);
-                }
+                }   
                 adapter.notifyDataSetChanged();
             }
 
