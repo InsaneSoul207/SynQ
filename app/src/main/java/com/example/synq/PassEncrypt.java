@@ -5,13 +5,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class PassEncrypt{
-
     // Initial hash values (first 32 bits of square roots of first 8 primes)
     private static final int[] H = {
             0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
             0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
     };
-
     // SHA-256 round constants (first 32 bits of cube roots of first 64 primes)
     private static final int[] K = {
             0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -23,38 +21,30 @@ public class PassEncrypt{
             0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
             0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
     };
-
     // Right rotate function
     private static int rightRotate(int value, int bits) {
         return (value >>> bits) | (value << (32 - bits));
     }
-
     // SHA-256 σ0 and σ1 functions
     private static int sigma0(int x) {
         return rightRotate(x, 7) ^ rightRotate(x, 18) ^ (x >>> 3);
     }
-
     private static int sigma1(int x) {
         return rightRotate(x, 17) ^ rightRotate(x, 19) ^ (x >>> 10);
     }
-
     // SHA-256 compression functions
     private static int ch(int x, int y, int z) {
         return (x & y) ^ (~x & z);
     }
-
     private static int maj(int x, int y, int z) {
         return (x & y) ^ (x & z) ^ (y & z);
     }
-
     private static int sum0(int x) {
         return rightRotate(x, 2) ^ rightRotate(x, 13) ^ rightRotate(x, 22);
     }
-
     private static int sum1(int x) {
         return rightRotate(x, 6) ^ rightRotate(x, 11) ^ rightRotate(x, 25);
     }
-
     // Pad the message to 512-bit blocks
     private static byte[] padMessage(byte[] message) {
         int originalLength = message.length;
@@ -64,35 +54,28 @@ public class PassEncrypt{
         }
         byte[] padded = Arrays.copyOf(message, newLength + 8);
         padded[originalLength] = (byte) 0x80; // Append 1-bit (10000000)
-
         long bitLength = (long) originalLength * 8;
         for (int i = 0; i < 8; i++) {
             padded[padded.length - 1 - i] = (byte) (bitLength >>> (8 * i));
         }
         return padded;
     }
-
     // SHA-256 Main Hashing Algorithm
     public static String sha256(String input) {
         byte[] message = padMessage(input.getBytes(StandardCharsets.UTF_8));
-
         int[] hashValues = Arrays.copyOf(H, H.length);
         int[] words = new int[64];
-
         for (int i = 0; i < message.length; i += 64) {
             ByteBuffer buffer = ByteBuffer.wrap(message, i, 64);
             for (int j = 0; j < 16; j++) {
                 words[j] = buffer.getInt();
             }
-
             // Expand words W16–W63
             for (int j = 16; j < 64; j++) {
                 words[j] = sigma1(words[j - 2]) + words[j - 7] + sigma0(words[j - 15]) + words[j - 16];
             }
-
             int a = hashValues[0], b = hashValues[1], c = hashValues[2], d = hashValues[3];
             int e = hashValues[4], f = hashValues[5], g = hashValues[6], h = hashValues[7];
-
             for (int j = 0; j < 64; j++) {
                 int temp1 = h + sum1(e) + ch(e, f, g) + K[j] + words[j];
                 int temp2 = sum0(a) + maj(a, b, c);
@@ -106,7 +89,6 @@ public class PassEncrypt{
                 b = a;
                 a = temp1 + temp2;
             }
-
             hashValues[0] += a;
             hashValues[1] += b;
             hashValues[2] += c;
@@ -116,7 +98,6 @@ public class PassEncrypt{
             hashValues[6] += g;
             hashValues[7] += h;
         }
-
         // Convert hash values to hexadecimal
         StringBuilder hash = new StringBuilder();
         for (int hVal : hashValues) {
@@ -124,6 +105,4 @@ public class PassEncrypt{
         }
         return hash.toString();
     }
-
-
 }

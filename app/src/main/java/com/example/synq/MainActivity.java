@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setting.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, settings.class);
             startActivity(intent);
-            });
+        });
 
         mainUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new UserAdapter(MainActivity.this, usersArrayList);

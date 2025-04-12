@@ -1,8 +1,10 @@
 package com.example.synq;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,10 +75,11 @@ public class chat_Win extends AppCompatActivity {
         messagesAdpter = new messageAdpter(messagesArrayList, chat_Win.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
+
         mmessagesAdpter.setLayoutManager(linearLayoutManager);
         mmessagesAdpter.setAdapter(messagesAdpter);
-
         reciverNName.setText(reciverName);
+
         Picasso.get().load(reciverimg).into(profile);
 
         SenderUID = firebaseAuth.getUid();
@@ -92,7 +95,6 @@ public class chat_Win extends AppCompatActivity {
                 messagesArrayList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     msgModelclass messages = dataSnapshot.getValue(msgModelclass.class);
-
                     if (messages != null) {
                         messages.setMessage(decrypt(messages.getMessage()));
                         messagesArrayList.add(messages);
@@ -122,20 +124,18 @@ public class chat_Win extends AppCompatActivity {
             }
         });
 
+
         sendbtn.setOnClickListener(view -> {
             String message = textmsg.getText().toString().trim();
             if (message.isEmpty()) {
                 Toast.makeText(chat_Win.this, "Enter a message first...", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             textmsg.setText("");
             Date date = new Date();
             String encryptedMessage = encrypt(message);
             msgModelclass messagesss = new msgModelclass(encryptedMessage, SenderUID, date.getTime());
-
             DatabaseReference senderRef = database.getReference().child("chats").child(senderRoom).child("messages");
-
             if (SenderUID.equals(reciverUid)) {
                 senderRef.push().setValue(messagesss)
                         .addOnCompleteListener(task -> {
@@ -143,7 +143,8 @@ public class chat_Win extends AppCompatActivity {
                                 Toast.makeText(chat_Win.this, "Failed to send message", Toast.LENGTH_SHORT).show();
                             }
                         });
-            } else {
+            }
+            else {
                 senderRef.push().setValue(messagesss)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {

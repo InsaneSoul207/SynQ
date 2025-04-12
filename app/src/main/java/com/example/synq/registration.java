@@ -53,7 +53,6 @@ public class registration extends AppCompatActivity {
     String imageUploadUrl = "";
     String IMG_BB_API_KEY = "85e95d78f848688db00735f3a3e73cf7";
     OkHttpClient client = new OkHttpClient();
-
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,6 @@ public class registration extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_registration);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         SignupButton = findViewById(R.id.SignUpButton);
         Rg_username = findViewById(R.id.RegUsername);
         Rg_Email = findViewById(R.id.RegEmailAddress);
@@ -69,7 +67,6 @@ public class registration extends AppCompatActivity {
         Rg_rePassword = findViewById(R.id.RegRePassword1);
         loginButton = findViewById(R.id.LoginButton);
         rg_profileImg = findViewById(R.id.profileImage);
-
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         database.setPersistenceEnabled(true);
@@ -78,19 +75,16 @@ public class registration extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
         rg_profileImg.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, 10);
         });
-
         SignupButton.setOnClickListener(view -> {
             String Username = Rg_username.getText().toString();
             String Email = Rg_Email.getText().toString();
             String Password = Rg_Password.getText().toString();
             String RePassword = Rg_rePassword.getText().toString();
             String status = "Hey! I'm using this application";
-
             if (TextUtils.isEmpty(Username) || TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password) || TextUtils.isEmpty(RePassword)) {
                 Toast.makeText(registration.this, "Please enter valid info.", Toast.LENGTH_SHORT).show();
             } else if (!Email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
@@ -187,13 +181,11 @@ public class registration extends AppCompatActivity {
                         .url("https://api.imgbb.com/1/upload")
                         .post(requestBody)
                         .build();
-
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         Log.e("ImgBB Upload", "Failed to upload image", e);
                     }
-
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         if (response.isSuccessful()) {
