@@ -5,39 +5,29 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dark_blue_portrait_bg"
     tools:context=".splash">
 
     <TextView
         android:id="@+id/TeamName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/dancing"
+        android:fontFamily="@font/apptext"
         android:text="Team ReConnect"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.961" />
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/LogoImg"-->
-    <!--        android:layout_width="392dp"-->
-    <!--        android:layout_height="378dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.5"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintVertical_bias="0.412"-->
-    <!--        app:srcCompat="@drawable/logo_no_bg" />-->
+        app:layout_constraintVertical_bias="0.895" />
 
     <TextView
         android:id="@+id/TeamName1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/dancing"
+        android:fontFamily="@font/apptext"
         android:text="By"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,18 +35,18 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.927" />
+        app:layout_constraintVertical_bias="0.859" />
 
     <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="120dp"
-        android:layout_height="119dp"
+        android:id="@+id/LogoImg"
+        android:layout_width="263dp"
+        android:layout_height="287dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintVertical_bias="0.412"
         app:srcCompat="@drawable/logo_possible_no_bg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

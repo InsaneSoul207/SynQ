@@ -27,6 +27,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -38,6 +41,7 @@ dependencies {
     implementation libs.firebase.database
     implementation libs.firebase.auth
     implementation libs.firebase.storage
+    implementation libs.cardview.v7
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -46,4 +50,6 @@ dependencies {
     implementation libs.converter.gson
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'com.google.android.material:material:1.10.0'
+
 }

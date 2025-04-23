@@ -1,5 +1,5 @@
 [versions]
-agp = "8.8.0"
+agp = "8.9.1"
 backendless = "7.0.3"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -13,6 +13,7 @@ firebaseDatabase = "21.0.0"
 firebaseAuth = "23.1.0"
 firebaseStorage = "21.0.1"
 retrofit = "2.9.0"
+cardviewV7 = "28.0.0"
 
 [libraries]
 backendless = { module = "com.backendless:backendless", version.ref = "backendless" }
@@ -28,6 +29,7 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+cardview-v7 = { group = "com.android.support", name = "cardview-v7", version.ref = "cardviewV7" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
