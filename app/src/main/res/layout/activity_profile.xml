@@ -5,13 +5,13 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CBE7E5E5"
+    android:background="#D8E7E5E5"
     tools:context=".ActivityProfile">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="#CBE7E5E5"
+        android:backgroundTint="#CBE5E6E6"
         android:orientation="vertical">
 
 
@@ -49,18 +49,19 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/logo_possible_no_bg" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/profileImageView"
-                    android:layout_width="190dp"
-                    android:layout_height="204dp"
-                    android:layout_margin="16dp"
-                    android:scaleType="centerCrop"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileimage"
+                    android:layout_width="209dp"
+                    android:layout_height="201dp"
+                    android:layout_marginTop="@dimen/_7sdp"
                     android:src="@drawable/photocamera"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="@dimen/_2sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearance="@style/CircularImageView" />
+                    app:layout_constraintVertical_bias="0.6" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -89,10 +90,12 @@
                     app:layout_constraintVertical_chainStyle="packed">
 
                     <TextView
+                        android:id="@+id/UserNameTxtView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:padding="16dp"
-                        android:text="Username: JohnDoe"
+                        android:text="Username: "
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="16sp"
@@ -105,18 +108,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="4dp"
-                    app:layout_constraintBottom_toTopOf="@+id/buttonCard"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/usernameCard"
                     app:layout_constraintStart_toStartOf="@+id/usernameCard"
                     app:layout_constraintTop_toBottomOf="@+id/usernameCard">
 
                     <TextView
+                        android:id="@+id/UserEmailTxtView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/white_background"
+                        android:background="@color/white"
                         android:padding="16dp"
                         android:text="Email: user@domain.com"
                         android:textAlignment="center"
@@ -125,31 +128,6 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Edit Profile Button -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@id/buttonCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#6BAB82"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/emailCard"
-                    app:layout_constraintStart_toStartOf="@+id/emailCard"
-                    app:layout_constraintTop_toBottomOf="@+id/emailCard">
-
-                    <Button
-                        android:id="@+id/cardButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#6BAB82"
-                        android:paddingStart="24dp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="24dp"
-                        android:paddingBottom="12dp"
-                        android:stateListAnimator="@null"
-                        android:text="Edit Profile"
-                        android:textColor="@color/white" />
-                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

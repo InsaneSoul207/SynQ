@@ -27,6 +27,16 @@ public class settings extends AppCompatActivity {
 
         Profile = findViewById(R.id.Profile);
         LogOut = findViewById(R.id.LogOut);
+
+        Profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(settings.this, ActivityProfile.class);
+                startActivity(intent);
+
+            }
+        });
+
         LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

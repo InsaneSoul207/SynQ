@@ -17,17 +17,6 @@
         android:layout_alignParentEnd="true"
         android:gravity="right">
 
-        <ImageView
-            android:id="@+id/LogOu"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="-15dp"
-            android:background="@drawable/logout"
-            android:contentDescription="TODO">
-
-        </ImageView>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -52,14 +41,6 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/camera"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:contentDescription="Camera"
-            android:src="@drawable/camera" />
 
         <ImageView
             android:id="@+id/message"

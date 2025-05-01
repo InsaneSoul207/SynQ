@@ -20,12 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -106,46 +106,33 @@ public class registration extends AppCompatActivity {
                         DatabaseReference reference = database.getReference().child("users").child(id);
 
                         if (imageURI != null) {
-
                             uploadImageToImgBB(imageURI, (imageUrl) -> {
                                 String password = PassEncrypt.sha256(Password);
                                 Users user = new Users(id, Username, Email, password, imageUrl, status);
                                 reference.setValue(user).addOnCompleteListener(task1 -> {
                                     if (task1.isSuccessful()) {
-                                        Log.d("Firebase", "User data uploaded successfully!");
                                         Intent intent = new Intent(registration.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
-                                        Log.e("Firebase", "Error uploading user data: " + task1.getException());
                                         Toast.makeText(registration.this, "Error in creating the user", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             });
                         } else {
-                            String password;
-                            try {
-                                password = PassEncrypt.sha256(Password);
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
+                            String password = PassEncrypt.sha256(Password);
                             Users users = new Users(id, Username, Email, password, "https://i.ibb.co/3Y1hhVNP/download.png", status);
-                            reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d("Firebase", "User data uploaded successfully!");
-                                        Intent intent = new Intent(registration.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        Log.e("Firebase", "Error uploading user data: " + task.getException());
-                                        Toast.makeText(registration.this, "Error in creating the user", Toast.LENGTH_SHORT).show();
-                                    }
+                            reference.setValue(users).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    Intent intent = new Intent(registration.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(registration.this, "Error in creating the user", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
-                    }else {
+                    } else {
                         Rg_username.setError(task.getException().getMessage());
                         Toast.makeText(registration.this, "Auth failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -198,11 +185,12 @@ public class registration extends AppCompatActivity {
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         if (response.isSuccessful()) {
                             String responseBody = Objects.requireNonNull(response.body()).string();
-                            String imageUrl = responseBody.split("\"url\":\"")[1].split("\"")[0];
                             try {
+                                JSONObject jsonObject = new JSONObject(responseBody);
+                                String imageUrl = jsonObject.getJSONObject("data").getString("url");
                                 callback.onImageUploaded(imageUrl);
                             } catch (Exception e) {
-                                throw new RuntimeException(e);
+                                Log.e("ImgBB Upload", "JSON parsing error", e);
                             }
                         } else {
                             Log.e("ImgBB Upload", "Response not successful: " + response);

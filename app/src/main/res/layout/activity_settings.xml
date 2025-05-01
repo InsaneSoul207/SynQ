@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/Profile"
-        android:layout_width="98dp"
+        android:layout_width="wrap_content"
         android:layout_height="43dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Profile"
