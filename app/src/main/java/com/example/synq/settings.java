@@ -25,8 +25,8 @@ public class settings extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_settings);
 
-        Profile = findViewById(R.id.Profile);
         LogOut = findViewById(R.id.LogOut);
+
         LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

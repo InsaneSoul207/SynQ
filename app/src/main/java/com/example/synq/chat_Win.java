@@ -34,13 +34,12 @@ import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class chat_Win extends AppCompatActivity {
-
     String reciverimg, reciverName, reciverUid, SenderUID;
     CircleImageView profile;
     TextView reciverNName;
     CardView sendbtn;
     EditText textmsg;
-    FirebaseAuth firebaseAuth;
+        FirebaseAuth firebaseAuth;
     FirebaseDatabase database;
     public static String senderImg;
     public static String reciverIImg;
@@ -48,7 +47,6 @@ public class chat_Win extends AppCompatActivity {
     RecyclerView mmessagesAdpter;
     ArrayList<msgModelclass> messagesArrayList;
     messageAdpter messagesAdpter;
-
     private static final int SHIFT = 3;
     private static final String SECRET_KEY = "SecretSynQ";
 
@@ -124,7 +122,6 @@ public class chat_Win extends AppCompatActivity {
             }
         });
 
-
         sendbtn.setOnClickListener(view -> {
             String message = textmsg.getText().toString().trim();
             if (message.isEmpty()) {
@@ -145,13 +142,12 @@ public class chat_Win extends AppCompatActivity {
                         });
             }
             else {
-                senderRef.push().setValue(messagesss)
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                database.getReference().child("chats").child(reciverRoom).child("messages")
-                                        .push().setValue(messagesss);
-                            }
-                        });
+                senderRef.push().setValue(messagesss).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        database.getReference().child("chats").child(reciverRoom).child("messages")
+                                .push().setValue(messagesss);
+                    }
+                });
             }
         });
 
@@ -164,9 +160,8 @@ public class chat_Win extends AppCompatActivity {
 
     public static String encrypt(String message) {
         StringBuilder encrypted = new StringBuilder();
-
         for (char ch : message.toCharArray()) {
-            encrypted.append((char) (ch + SHIFT));
+            encrypted.append((char)(ch + SHIFT));
         }
 
         return xorWithKey(encrypted.toString(), SECRET_KEY);
@@ -174,19 +169,17 @@ public class chat_Win extends AppCompatActivity {
 
     public static String decrypt(String encryptedMessage) {
         String xorDecrypted = xorWithKey(encryptedMessage, SECRET_KEY);
-
         StringBuilder decrypted = new StringBuilder();
         for (char ch : xorDecrypted.toCharArray()) {
-            decrypted.append((char) (ch - SHIFT));
+            decrypted.append((char)(ch - SHIFT));
         }
-
         return decrypted.toString();
     }
 
     private static String xorWithKey(String text, String key) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            result.append((char) (text.charAt(i) ^ key.charAt(i % key.length())));
+            result.append((char)(text.charAt(i) ^ key.charAt(i % key.length())));
         }
         return result.toString();
     }

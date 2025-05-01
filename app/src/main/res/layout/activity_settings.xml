@@ -9,30 +9,16 @@
     tools:context=".settings">
 
     <TextView
-        android:id="@+id/Profile"
-        android:layout_width="98dp"
-        android:layout_height="43dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Profile"
-        android:textSize="@dimen/_20sdp"
-        app:layout_constraintBottom_toTopOf="@+id/LogOut"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.966" />
-
-    <TextView
         android:id="@+id/LogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="404dp"
         android:fontFamily="@font/poppins_bold"
         android:text="LogOut"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.057"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
